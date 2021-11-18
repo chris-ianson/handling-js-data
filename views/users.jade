@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  ul
+    each record in data
+      - var isYoung = (record.age <= 21 ? '21 or under: Aye!' : '21 or under: Nope!')
+      - var isDeveloper = (record.isDeveloper === true ? 'Developer: Yes' : 'Developer: No')
+      li='---------------------------------'
+      li='Firstname: ' + record.firstName
+      li='Date of Birth: ' + record.dateOfBirth
+      li='Age: ' + record.age
+      li=isYoung
+      li=isDeveloper
+      li='Location: ' + record.location
+      li='---------------------------------'

@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+const userService = require('../services/user-service')
+
+/* GET users listng. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+
+  const userData = userService.getUsers();
+
+  res.render('users', { title: 'Users', data: userData });
 });
 
 module.exports = router;
