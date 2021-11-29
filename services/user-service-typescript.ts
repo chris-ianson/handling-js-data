@@ -1,7 +1,7 @@
-const userConnector = require('../connectors/user-connector')
+const userConnector = require('../connectors/user-connector-typescript')
 
 function getUsers() {
-  const userData = userConnector.getUsers();
+  const userData = userConnector.getUsersTS();
   return userData;
 }
 
