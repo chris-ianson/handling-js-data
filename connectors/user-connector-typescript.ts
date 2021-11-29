@@ -1,4 +1,4 @@
-function getUsers() {
+function getUsersTS() {
   // Calls API and brings back users
   const userData = [
     {
@@ -20,5 +20,5 @@ function getUsers() {
 }
 
 module.exports = {
-  getUsers,
+  getUsersTS,
 };
