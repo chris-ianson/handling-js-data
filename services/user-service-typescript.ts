@@ -1,10 +1,8 @@
-const userConnector = require('../connectors/user-connector-typescript')
+import * as userConnector from '../connectors/user-connector-typescript'
+import User from "../models/User";
 
-function getUsers() {
-  const userData = userConnector.getUsersTS();
+export function getUsers(): User[] {
+  const userData: User[] = userConnector.getUsers();
+
   return userData;
 }
-
-module.exports = {
-  getUsers,
-};

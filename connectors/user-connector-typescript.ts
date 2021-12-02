@@ -1,6 +1,7 @@
-function getUsersTS() {
-  // Calls API and brings back users
-  const userData = [
+import User from "../models/User";
+
+export function getUsers(): User[] {
+  const userData: User[] = [
     {
       firstName: "Chris",
       dateOfBirth: '07/05/2000',
@@ -11,14 +12,10 @@ function getUsersTS() {
     {
       firstName: "Thomas",
       dateOfBirth: "7th May 2000",
-      age: "twenty one",
-      isDeveloper: "true"
+      age: 21,
+      isDeveloper: true
     },
   ];
 
   return userData;
 }
-
-module.exports = {
-  getUsersTS,
-};
