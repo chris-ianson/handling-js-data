@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
   const userData = userService.getUsers();
 
-  res.render('users', { title: 'Users', data: userData });
+  res.render('users', { title: 'The Sopranos', data: userData });
 });
 
 module.exports = router;

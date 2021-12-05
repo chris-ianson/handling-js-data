@@ -2,16 +2,17 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Dead or Alive....
   ul
     each record in data
-      - var isYoung = (record.age <= 21 ? '21 or under: Aye!' : '21 or under: Nope!')
-      - var isDeveloper = (record.isDeveloper === true ? 'Developer: Yes' : 'Developer: No')
+      - var whackedAnybody = (record.hits === 0 ? 'Whacked anyone: No' : 'Whacked anyone: Yep!')
+      - var isDead = (record.isDead === true ? 'Is Dead: Yes' : 'Is Dead: No')
       li='---------------------------------'
       li='Firstname: ' + record.firstName
+      li='LastName: ' + record.lastName
       li='Date of Birth: ' + record.dateOfBirth
-      li='Age: ' + record.age
-      li=isYoung
-      li=isDeveloper
+      li=whackedAnybody
+      li=isDead
+      li='Family: ' + record.family
       li='Location: ' + record.location
       li='---------------------------------'

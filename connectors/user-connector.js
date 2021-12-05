@@ -2,17 +2,22 @@ function getUsers() {
   // Calls API and brings back users
   const userData = [
     {
-      firstName: "Chris",
-      dateOfBirth: '07/05/2000',
-      age: 21,
-      isDeveloper: true,
-      location: 'Newcastle'
+      firstName: "Jackie",
+      lastName: "Aprile",
+      dateOfBirth: '07/05/1954',
+      hits: 20,
+      isDead: "true",
+      family: "DiMeo",
+      location: 'New Jersey',
     },
     {
-      firstName: "Thomas",
-      dateOfBirth: "7th May 2000",
-      age: "twenty one",
-      isDeveloper: "true"
+      firstName: "Carmela",
+      lastName: "Soprano",
+      dateOfBirth: '07/05/1963',
+      hits: "0",
+      isDead: false,
+      family: "Gambino",
+      location: 'New Jersey',
     },
   ];
 

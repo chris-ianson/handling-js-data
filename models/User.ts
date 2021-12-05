@@ -2,19 +2,25 @@ export default class User {
 
   readonly firstName: string;
 
+  readonly lastName: string;
+
   readonly dateOfBirth: string;
 
-  readonly age: number;
+  readonly hits: number;
 
-  readonly isDeveloper: boolean;
+  readonly isDead: boolean;
+
+  readonly family: string;
 
   readonly location?: string;
 
-  constructor(firstName: string, dateOfBirth: string, age: number, isDeveloper: boolean, location?: string) {
+  constructor(firstName: string, lastName: string, family: string, dateOfBirth: string, hits: number, isDeveloper: boolean, location?: string) {
     this.firstName = firstName;
+    this.lastName = lastName;
+    this.family = family;
     this.dateOfBirth = dateOfBirth;
-    this.age = age;
-    this.isDeveloper = isDeveloper;
+    this.hits = hits;
+    this.isDead = isDeveloper;
     this.location = location;
   }
 }
