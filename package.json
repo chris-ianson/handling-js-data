@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "DEBUG=handling-js-data:* nodemon start",
-    "dev:ts": "nodemon -x 'node -r ts-node/register' ./bin/www"
+    "dev:ts": "DEBUG=handling-js-data:* nodemon -x 'node --inspect ./bin/www -r ts-node/register' ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
