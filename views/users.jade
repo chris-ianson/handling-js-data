@@ -5,14 +5,12 @@ block content
   p Dead or Alive....
   ul
     each record in data
-      - var whackedAnybody = (record.hits === 0 ? 'Whacked anyone: No' : 'Whacked anyone: Yep!')
-      - var isDead = (record.isDead === true ? 'Is Dead: Yes' : 'Is Dead: No')
       li='---------------------------------'
       li='Firstname: ' + record.firstName
       li='LastName: ' + record.lastName
       li='Date of Birth: ' + record.dateOfBirth
-      li=whackedAnybody
-      li=isDead
+      li=record.haveTheyWhackedAnybody()
+      li=record.areTheyDead()
       li='Family: ' + record.family
       li='Location: ' + record.location
       li='---------------------------------'

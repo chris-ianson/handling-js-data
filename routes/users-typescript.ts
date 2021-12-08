@@ -9,6 +9,8 @@ router.get('/', function(req:Request, res: Response, next:NextFunction) {
 
   const userData: User[] = userService.getUsers();
 
+  console.log('is dead: ', userData[0].areTheyDead());
+
   res.render('users', { title: 'Users', data: userData });
 });
 

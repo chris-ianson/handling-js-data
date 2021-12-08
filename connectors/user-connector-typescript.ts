@@ -1,7 +1,7 @@
 import User from "../models/User";
 
 export function getUsers(): User[] {
-  const userData: User[] = [
+  const userData: object[] = [
     {
       firstName: "Jackie",
       lastName: "Aprile",
@@ -22,5 +22,15 @@ export function getUsers(): User[] {
     },
   ];
 
-  return userData;
+  return userData.map((user: any) => {
+    return new User(
+        user.firstName,
+        user.lastName,
+        user.family,
+        user.dateOfBirth,
+        user.hits,
+        user.isDead,
+        user.location,
+    );
+  });
 }
