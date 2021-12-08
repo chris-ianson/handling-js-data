@@ -4,33 +4,23 @@ export function getUsers(): User[] {
   const userData: object[] = [
     {
       firstName: "Jackie",
-      lastName: "Aprile",
-      dateOfBirth: '07/05/1954',
-      hits: 20,
       isDead: true,
-      family: "DiMeo",
+      hits: 20,
+      lastName: "Aprile",
       location: 'New Jersey',
+      dateOfBirth: '07/05/1954',
+      family: "DiMeo",
     },
     {
-      firstName: "Carmela",
-      lastName: "Soprano",
       dateOfBirth: '07/05/1963',
       hits: 0,
-      isDead: false,
-      family: "Gambino",
+      firstName: "Carmela",
       location: 'New Jersey',
+      isDead: false,
+      lastName: "Soprano",
+      family: "Gambino",
     },
   ];
 
-  return userData.map((user: any) => {
-    return new User(
-        user.firstName,
-        user.lastName,
-        user.family,
-        user.dateOfBirth,
-        user.hits,
-        user.isDead,
-        user.location,
-    );
-  });
+  return User.deserialize(userData);
 }

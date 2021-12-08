@@ -1,30 +1,25 @@
+import { plainToInstance } from 'class-transformer';
 
 type Family = 'DiMeo' | 'New York'
 
 export default class User {
 
-  readonly firstName: string;
+  readonly firstName!: string;
 
-  readonly lastName: string;
+  readonly lastName!: string;
 
-  readonly dateOfBirth: string;
+  readonly dateOfBirth!: string;
 
-  readonly hits: number;
+  readonly hits!: number;
 
-  readonly isDead: boolean;
+  readonly isDead!: boolean;
 
-  readonly family: Family;
+  readonly family!: Family;
 
   readonly location?: string;
 
-  constructor(firstName: string, lastName: string, family: Family, dateOfBirth: string, hits: number, isDeveloper: boolean, location?: string) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.family = family;
-    this.dateOfBirth = dateOfBirth;
-    this.hits = hits;
-    this.isDead = isDeveloper;
-    this.location = location;
+  static deserialize(data: object[]): User[] {
+    return plainToInstance(User, data);
   }
 
   areTheyDead(): string {

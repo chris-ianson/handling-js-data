@@ -11,7 +11,7 @@ router.get('/', function(req:Request, res: Response, next:NextFunction) {
 
   console.log('is dead: ', userData[0].areTheyDead());
 
-  res.render('users', { title: 'Users', data: userData });
+  res.render('users', { title: 'The Sopranos', data: userData });
 });
 
 module.exports = router;
