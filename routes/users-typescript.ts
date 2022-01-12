@@ -9,7 +9,7 @@ router.get('/', function(req:Request, res: Response, next:NextFunction) {
 
   const userData: User[] = userService.getUsers();
 
-  res.render('users', { title: 'Users', data: userData });
+  res.render('users', { title: 'The Sopranos', data: userData });
 });
 
 module.exports = router;
