@@ -8,6 +8,7 @@
     "dev:ts": "DEBUG=handling-js-data:* nodemon -x 'node --inspect -r ts-node/register' ./bin/www"
   },
   "dependencies": {
+    "dayjs": "^1.10.6",
     "class-transformer": "^0.5.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

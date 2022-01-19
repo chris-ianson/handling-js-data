@@ -8,7 +8,8 @@ block content
       li='---------------------------------'
       li='Firstname: ' + record.firstName
       li='LastName: ' + record.lastName
-      li='Date of Birth: ' + record.dateOfBirth
+      li='Date of Birth: ' + record.dateOfBirthFormatted()
+      li='Age: ' + record.getAge()
       li=record.haveTheyWhackedAnybody()
       li=record.areTheyDead()
       li='Family: ' + record.family
