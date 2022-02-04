@@ -6,7 +6,6 @@ const userService = require('../services/user-service')
 router.get('/', function(req, res, next) {
 
   const userData = userService.getUsers();
-  console.log('user data', userData);
 
   res.render('users', { title: 'The Sopranos', data: userData });
 });
