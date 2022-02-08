@@ -20,5 +20,16 @@ npm run dev:ts
 Once running the app can be accessed at:
 http://localhost:3000/users
 
+###Step 2
+
+Step2 introduces TypeScript. within the routes directory there's a new users-typescript.ts file.
+We've added a User model and the user-connector-typescript.ts uses this model to send back a User Array.
+
+```
+git checkout step3
+```
+
+
+
 
 
