@@ -1,55 +1,28 @@
-# Handling data better with TypeScript
+# Connecting to APIs (1-to-1 sync)
 
-Example app of how TypeScript can benefit your service. Data is based on HBOs The Sopranos television series (why not!)
-
-#### Dependencies
-
-You must have Node installed to run this app. step1 branch should pull in all dependencies needed to get started.
-
+Example of how to connect to APIs
 
 ### Step 1
 
-The first step is a simple example that displays some static user data on a page. To get it running checkout the step1 branch and run the following.
+The first step contains a connection to the user backend service.
 
 ```
-git checkout step1
+git checkout api-step1
 npm install
-npm run dev:ts
+npm run dev
 ```
 
 Once running the app can be accessed at:
-http://localhost:3000/users
+http://localhost:3000/users-typescript
 
-### Step 2
+The app uses the axios http library to connect to the backend API.
 
-Step2 introduces TypeScript. within the routes directory there's a new users-typescript.ts file.
-We've added a User model and the user-connector-typescript.ts uses this model to send back a User Array.
-
-```
-git checkout step3
-```
-
-### Step 3
-
-On step3 if the user-connector-typescript.ts file uses the map method to send back actual instances of User. This allows the users.jade template to call class methods directly.
+Tests are included using the mocha and sinon test libraries and coverage is implemented with c8.
 
 ```
-git checkout step4
+npm run test:coverage
 ```
-
-### Step 4
-
-In step4 the User model is updated and uses the class-transformer library to help instantiate instances of User. You can find out about class-transformer at the following link:
-https://github.com/typestack/class-transformer/tree/master
-
+Check the second step to see how to implement Jest test framework
 ```
-git checkout step5
+git checkout api-step2
 ```
-
-### Step 5
-
-Step5 provides an example of the @Transform decorator on string to transform a date formatted sting into a Date object. 
-
-
-
-

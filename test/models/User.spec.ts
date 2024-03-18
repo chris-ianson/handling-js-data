@@ -2,9 +2,9 @@ import { expect } from 'chai';
 
 import User from "../../models/User";
 
-describe('User', () => {
+describe('User model', () => {
 
-  context('deserialize', () => {
+  context('deserialize should', () => {
     it('return instance of User', () => {
       const data: any = {};
 
