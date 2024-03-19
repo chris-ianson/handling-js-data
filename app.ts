@@ -2,7 +2,7 @@ var createError = require('http-errors');
 
 import express, { Application, Request, Response} from "express";
 
-require('dotenv').config();
+// require('dotenv').config();
 
 // var express = require('express');
 var path = require('path');
@@ -16,7 +16,7 @@ var usersTypescriptRouter = require('./routes/users-typescript');
 
 const app: Application = express();
 
-const port = process.env.PORT;
+// const port = process.env.PORT;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,8 +48,8 @@ app.use(function(req:Response, res:Request, next:any) {
 //   res.render('error');
 // });
 
-app.listen(port, () => {
-  console.log('listening on port ' + port)
-});
+// app.listen(port, () => {
+//   console.log('listening on port ' + port)
+// });
 
 export default app;

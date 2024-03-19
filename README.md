@@ -26,3 +26,18 @@ Check the second step to see how to implement Jest test framework
 ```
 git checkout api-step2
 ```
+
+### Step 2
+
+Step 2 implements the Jest test framework and can be ran with the following command.
+
+```
+npm update
+npm run test:jest
+```
+
+Checkout the next step to see how the tests can be refactored to make them easier to work with.
+
+```
+git checkout api-step3
+```
