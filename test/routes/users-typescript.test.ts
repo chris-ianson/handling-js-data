@@ -1,7 +1,6 @@
 import {getUsers, getUsersByID} from '../../services/user-service-typescript';
 import User from "../../models/User";
 import app from "../../app";
-import {AxiosError} from "axios";
 
 const request = require('supertest');
 
@@ -11,7 +10,6 @@ const mockGetUsers = getUsers as jest.MockedFunction<typeof getUsers>
 const mockGetUsersByID = getUsersByID as jest.MockedFunction<typeof getUsersByID>
 
 describe('users-typescript', () => {
-
   const users: User[] = User.deserialize(
     [{
       firstName: "Jackie",
@@ -23,15 +21,7 @@ describe('users-typescript', () => {
       family: "DiMeo",
     }]);
 
-  // @ts-ignore
-  const axiosError: AxiosError = new AxiosError("ECONNREFUSED", "500", {}, {},
-    {
-      data: {errors: []},
-      status: 500,
-      statusText: 'ECONNREFUSED',
-      headers: {},
-      config: {}
-    });
+  const axiosError  = new Error("ECONNREFUSED");
 
   describe('/users-typescript route should', () => {
 

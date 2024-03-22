@@ -1,6 +1,6 @@
 import * as userService from "../../services/user-service-typescript";
 import {getUsers, getUsersByID} from "../../connectors/user-connector-typescript";
-import {AxiosError} from "axios";
+import mockAxios from 'jest-mock-axios';
 import User from "../../models/User";
 
 jest.mock('../../connectors/user-connector-typescript');
@@ -10,38 +10,29 @@ const mockGetUsersByID = getUsersByID as jest.MockedFunction<typeof getUsersByID
 
 describe('user-service-typescript', () => {
 
+  afterEach(() => {
+    mockAxios.reset();
+  });
+
   const data: object =
-    {
-      data: [{
-        firstName: "Jackie",
-        isDead: true,
-        hits: 20,
-        lastName: "Aprile",
-        location: 'New Jersey',
-        dateOfBirth: '07/05/1954',
-        family: "DiMeo",
-      }]
-    };
+    [{
+      firstName: "Jackie",
+      isDead: true,
+      hits: 20,
+      lastName: "Aprile",
+      location: 'New Jersey',
+      dateOfBirth: '07/05/1954',
+      family: "DiMeo",
+    }];
 
-  // @ts-ignore
-  const axiosError404: AxiosError = new AxiosError("ECONNREFUSED","404",{},{},
-    {
-      data: { errors: [] },
-      status:404,
-      statusText:'ECONNREFUSED',
-      headers:{},
-      config:{}
-    });
-
-  // @ts-ignore
-  const axiosError: AxiosError = new AxiosError("ECONNREFUSED","500",{},{},
-    {
-      data: { errors: [] },
-      status:500,
-      statusText:'ECONNREFUSED',
-      headers:{},
-      config:{}
-    });
+  const axiosError = {
+    data: {},
+    status: 500,
+    statusText: 'InternalServerError',
+    headers: {},
+    config: {},
+    "isAxiosError": true,
+  };
 
   describe('getUsers should', () => {
 
@@ -54,38 +45,30 @@ describe('user-service-typescript', () => {
       expect(response[0].firstName).toEqual('Jackie');
     });
 
-    test('handle 404 response', async () => {
-      mockGetUsers.mockRejectedValue(axiosError404)
+    test('handle [] response', async () => {
+      mockGetUsers.mockResolvedValue([]);
 
       const response = await userService.getUsers();
 
       expect(response).toEqual([]);
     });
 
-    it('handle invalid error response', async () => {
-      // @ts-ignore
-      const axiosErrorNoResponse: AxiosError = new AxiosError("ECONNREFUSED","500",{},{});
-      mockGetUsers.mockRejectedValue(axiosErrorNoResponse)
-
-      return userService
-        .getUsers()
-        .catch((result: any) => {
-          expect(result).toBeInstanceOf(AxiosError);
-          expect(result.code).toEqual("500");
-        });
-    });
-
     it('handle 500 response', async () => {
       mockGetUsers.mockRejectedValue(axiosError);
 
-      return userService
-        .getUsers()
-        .catch((result: any) => {
-          expect(result).toBeInstanceOf(AxiosError);
-          expect(result.code).toEqual("500");
+      try {
+        await userService.getUsers();
+      } catch (error) {
+        expect(error).toEqual({
+          "config": {},
+          "data": {},
+          "headers": {},
+          "isAxiosError": true,
+          "status": 500,
+          "statusText": "InternalServerError"
         });
+      }
     });
-
   });
 
   describe('getUsersByID should', () => {
@@ -99,36 +82,29 @@ describe('user-service-typescript', () => {
       expect(response.firstName).toEqual('Jackie');
     });
 
-    it('handle 404 response', async () => {
-      mockGetUsersByID.mockRejectedValue(axiosError404);
+    it('handle undefined response', async () => {
+      mockGetUsersByID.mockResolvedValue([]);
 
       const response = await userService.getUsersByID('1');
 
       expect(response).toEqual(undefined);
     });
 
-    it('handle invalid error response', async () => {
-      // @ts-ignore
-      const axiosErrorNoResponse: AxiosError = new AxiosError("ECONNREFUSED","500",{},{});
-      mockGetUsersByID.mockRejectedValue(axiosErrorNoResponse);
-
-      return userService
-        .getUsersByID('1')
-        .catch((result: any) => {
-          expect(result).toBeInstanceOf(AxiosError);
-          expect(result.code).toEqual("500");
-        });
-    });
-
     it('handle 500 response', async () => {
       mockGetUsersByID.mockRejectedValue(axiosError);
 
-      return userService
-        .getUsersByID('1')
-        .catch((result: any) => {
-          expect(result).toBeInstanceOf(AxiosError);
-          expect(result.code).toEqual("500");
+      try {
+        await userService.getUsersByID("1");
+      } catch (error) {
+        expect(error).toEqual({
+          "config": {},
+          "data": {},
+          "headers": {},
+          "isAxiosError": true,
+          "status": 500,
+          "statusText": "InternalServerError"
         });
+      }
     });
   });
 });

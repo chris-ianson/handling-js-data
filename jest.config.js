@@ -11,4 +11,6 @@ module.exports = {
     "./services/user-service.js"
   ],
   testTimeout: 30000,
+  verbose: true,
+  notify: true,
 };

@@ -1,29 +1,131 @@
-import axios from 'axios';
+import mockAxios from 'jest-mock-axios';
 import {getUsers, getUsersByID} from "../../connectors/user-connector-typescript";
 
-jest.mock("axios");
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-//TODO: Look at https://vhudyma-blog.eu/3-ways-to-mock-axios-in-jest/ (axios-mock-adapter)
 describe('user-connector-typescript', function () {
+
+  afterEach(() => {
+    mockAxios.reset();
+  });
+
   describe('getUsers', () => {
-    test('should return result', async () => {
-      mockedAxios.get.mockResolvedValueOnce(Promise.resolve({}));
+    test('should handle 200 response', async () => {
+      const promise = getUsers();
 
-      const result = await getUsers();
+      expect(mockAxios.get).toHaveBeenCalledWith(
+        expect.stringMatching("http://localhost:4000/users"),
+        expect.objectContaining(
+          {
+            "validateStatus": expect.anything()
+          }
+        ));
 
-      expect(mockedAxios.get).toHaveBeenCalledWith('http://localhost:4000/users');
-      expect(result).toEqual({});
+      mockAxios.mockResponse({data: 'data here'});
+
+      const result = await promise;
+
+      expect(result).toEqual("data here");
+    });
+
+    test('should handle 404  response', async () => {
+      const promise = getUsers();
+
+      expect(mockAxios.get).toHaveBeenCalledWith(
+        expect.stringMatching("http://localhost:4000/users"),
+        expect.objectContaining(
+          {
+            "validateStatus": expect.anything()
+          }
+        ));
+
+      mockAxios.mockResponse({
+        data: {},
+        status: 404,
+        statusText: 'NotFound',
+        headers: {},
+        config: {},
+      });
+
+      const result = await promise;
+
+      expect(result).toEqual([]);
+    });
+
+    test('should handle 500 response', async () => {
+      const promise = getUsers();
+      mockAxios.mockError({
+        data: {},
+        status: 500,
+        statusText: 'InternalServerError',
+        headers: {},
+        config: {},
+      });
+
+      try {
+        await promise;
+      } catch (error) {
+        expect(error).toEqual({"config": {}, "data": {}, "headers": {}, "isAxiosError": true, "status": 500, "statusText": "InternalServerError"});
+      }
     });
   })
 
   describe('getUsersByID', () => {
     test('should return result', async () => {
-      mockedAxios.get.mockResolvedValueOnce(Promise.resolve({}));
+      const promise = getUsersByID("1");
 
-      const result = await getUsersByID("1");
+      expect(mockAxios.get).toHaveBeenCalledWith(
+        expect.stringMatching("http://localhost:4000/users/1"),
+        expect.objectContaining(
+          {
+            "validateStatus": expect.anything()
+          }
+        ));
 
-      expect(mockedAxios.get).toHaveBeenCalledWith('http://localhost:4000/users/1');
-      expect(result).toEqual({});
+      mockAxios.mockResponse({data: 'data here'});
+
+      const result = await promise;
+
+      expect(result).toEqual("data here");
+    });
+
+    test('should handle 404  response', async () => {
+      const promise = getUsersByID("1");
+
+      expect(mockAxios.get).toHaveBeenCalledWith(
+        expect.stringMatching("http://localhost:4000/users/1"),
+        expect.objectContaining(
+          {
+            "validateStatus": expect.anything()
+          }
+        ));
+
+      mockAxios.mockResponse({
+        data: {},
+        status: 404,
+        statusText: 'NotFound',
+        headers: {},
+        config: {},
+      });
+
+      const result = await promise;
+
+      expect(result).toEqual([]);
+    });
+
+    test('should handle 500 response', async () => {
+      const promise = getUsersByID("1");
+      mockAxios.mockError({
+        data: {},
+        status: 500,
+        statusText: 'InternalServerError',
+        headers: {},
+        config: {},
+      });
+
+      try {
+        await promise;
+      } catch (error) {
+        expect(error).toEqual({"config": {}, "data": {}, "headers": {}, "isAxiosError": true, "status": 500, "statusText": "InternalServerError"});
+      }
     });
   });
 });
