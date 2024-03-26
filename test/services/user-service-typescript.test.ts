@@ -2,6 +2,9 @@ import * as userService from "../../services/user-service-typescript";
 import {getUsers, getUsersByID} from "../../connectors/user-connector-typescript";
 import mockAxios from 'jest-mock-axios';
 import User from "../../models/User";
+import UserGenerator from "../generators/UserGenerator";
+import AxiosGenerator from "../generators/AxiosGenerator";
+import BaseGenerators from "../generators/BaseGenerators";
 
 jest.mock('../../connectors/user-connector-typescript');
 
@@ -14,25 +17,9 @@ describe('user-service-typescript', () => {
     mockAxios.reset();
   });
 
-  const data: object =
-    [{
-      firstName: "Jackie",
-      isDead: true,
-      hits: 20,
-      lastName: "Aprile",
-      location: 'New Jersey',
-      dateOfBirth: '07/05/1954',
-      family: "DiMeo",
-    }];
+  const data: { [key: string]: any }[] = [UserGenerator.getUser()];
 
-  const axiosError = {
-    data: {},
-    status: 500,
-    statusText: 'InternalServerError',
-    headers: {},
-    config: {},
-    "isAxiosError": true,
-  };
+  const axiosError = AxiosGenerator.getError();
 
   describe('getUsers should', () => {
 
@@ -42,7 +29,8 @@ describe('user-service-typescript', () => {
       const response = await userService.getUsers();
 
       expect(response).toBeInstanceOf(Array);
-      expect(response[0].firstName).toEqual('Jackie');
+      expect(response[0]).toBeInstanceOf(User);
+      expect(response[0].firstName).toEqual(data[0].firstName);
     });
 
     test('handle [] response', async () => {
@@ -59,14 +47,7 @@ describe('user-service-typescript', () => {
       try {
         await userService.getUsers();
       } catch (error) {
-        expect(error).toEqual({
-          "config": {},
-          "data": {},
-          "headers": {},
-          "isAxiosError": true,
-          "status": 500,
-          "statusText": "InternalServerError"
-        });
+        expect(error).toEqual(axiosError);
       }
     });
   });
@@ -74,36 +55,32 @@ describe('user-service-typescript', () => {
   describe('getUsersByID should', () => {
 
     it('return user data', async () => {
+      const id = BaseGenerators.getNumber();
       mockGetUsersByID.mockResolvedValue(data);
 
-      const response: any = await userService.getUsersByID('1');
+      const response: any = await userService.getUsersByID(id);
 
       expect(response).toBeInstanceOf(User);
-      expect(response.firstName).toEqual('Jackie');
+      expect(response.firstName).toEqual(data[0].firstName);
     });
 
     it('handle undefined response', async () => {
+      const id = BaseGenerators.getNumber()
       mockGetUsersByID.mockResolvedValue([]);
 
-      const response = await userService.getUsersByID('1');
+      const response = await userService.getUsersByID(id);
 
       expect(response).toEqual(undefined);
     });
 
     it('handle 500 response', async () => {
+      const id = BaseGenerators.getNumber()
       mockGetUsersByID.mockRejectedValue(axiosError);
 
       try {
-        await userService.getUsersByID("1");
+        await userService.getUsersByID(id);
       } catch (error) {
-        expect(error).toEqual({
-          "config": {},
-          "data": {},
-          "headers": {},
-          "isAxiosError": true,
-          "status": 500,
-          "statusText": "InternalServerError"
-        });
+        expect(error).toEqual(axiosError);
       }
     });
   });

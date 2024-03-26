@@ -1,6 +1,7 @@
 import {getUsers, getUsersByID} from '../../services/user-service-typescript';
 import User from "../../models/User";
 import app from "../../app";
+import UserGenerator from "../generators/UserGenerator";
 
 const request = require('supertest');
 
@@ -10,16 +11,7 @@ const mockGetUsers = getUsers as jest.MockedFunction<typeof getUsers>
 const mockGetUsersByID = getUsersByID as jest.MockedFunction<typeof getUsersByID>
 
 describe('users-typescript', () => {
-  const users: User[] = User.deserialize(
-    [{
-      firstName: "Jackie",
-      isDead: true,
-      hits: 20,
-      lastName: "Aprile",
-      location: 'New Jersey',
-      dateOfBirth: '07/05/1954',
-      family: "DiMeo",
-    }]);
+  const users: User[] = User.deserialize(UserGenerator.getMultipleUsers(1));
 
   const axiosError  = new Error("ECONNREFUSED");
 

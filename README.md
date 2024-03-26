@@ -41,3 +41,13 @@ Checkout the next step to see how the tests can be refactored to make them easie
 ```
 git checkout api-step3
 ```
+
+### Step 3
+
+Step 3 implements generators to help us build dynamic test data. To help us with mocking Axios responses we've added the `jest-mock-axios` dependency.
+
+The next step will continue the refactor of the connector to make it easier to work with.
+
+```
+git checkout api-step4
+```

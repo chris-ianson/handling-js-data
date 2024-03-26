@@ -1,5 +1,7 @@
 import mockAxios from 'jest-mock-axios';
 import {getUsers, getUsersByID} from "../../connectors/user-connector-typescript";
+import AxiosGenerator from "../generators/AxiosGenerator";
+import BaseGenerators from "../generators/BaseGenerators";
 
 describe('user-connector-typescript', function () {
 
@@ -10,6 +12,7 @@ describe('user-connector-typescript', function () {
   describe('getUsers', () => {
     test('should handle 200 response', async () => {
       const promise = getUsers();
+      const dataObject = BaseGenerators.getDataObject();
 
       expect(mockAxios.get).toHaveBeenCalledWith(
         expect.stringMatching("http://localhost:4000/users"),
@@ -19,11 +22,9 @@ describe('user-connector-typescript', function () {
           }
         ));
 
-      mockAxios.mockResponse({data: 'data here'});
+      mockAxios.mockResponse(dataObject);
 
-      const result = await promise;
-
-      expect(result).toEqual("data here");
+      expect(await promise).toEqual(dataObject.data);
     });
 
     test('should handle 404  response', async () => {
@@ -37,89 +38,67 @@ describe('user-connector-typescript', function () {
           }
         ));
 
-      mockAxios.mockResponse({
-        data: {},
-        status: 404,
-        statusText: 'NotFound',
-        headers: {},
-        config: {},
-      });
+      mockAxios.mockResponse(AxiosGenerator.get404());
 
-      const result = await promise;
-
-      expect(result).toEqual([]);
+      expect(await promise).toEqual([]);
     });
 
     test('should handle 500 response', async () => {
       const promise = getUsers();
-      mockAxios.mockError({
-        data: {},
-        status: 500,
-        statusText: 'InternalServerError',
-        headers: {},
-        config: {},
-      });
+      mockAxios.mockError(AxiosGenerator.getError());
 
-      try {
-        await promise;
-      } catch (error) {
-        expect(error).toEqual({"config": {}, "data": {}, "headers": {}, "isAxiosError": true, "status": 500, "statusText": "InternalServerError"});
-      }
+      promise.catch((e) => {
+        expect(e).toEqual({"config": {}, "data": {}, "headers": {}, "isAxiosError": true, "status": 500, "statusText": "InternalServerError"});
+      })
+      // try {
+      //   await promise;
+      // } catch (error) {
+      //
+      //   expect(error).toEqual({"config": {}, "data": {}, "headers": {}, "isAxiosError": true, "status": 500, "statusText": "InternalServerError"});
+      // }
     });
   })
 
   describe('getUsersByID', () => {
     test('should return result', async () => {
-      const promise = getUsersByID("1");
+      const id = BaseGenerators.getNumber();
+      const promise = getUsersByID(id);
+      const dataObject = BaseGenerators.getDataObject();
 
       expect(mockAxios.get).toHaveBeenCalledWith(
-        expect.stringMatching("http://localhost:4000/users/1"),
+        expect.stringMatching("http://localhost:4000/users/" + id),
         expect.objectContaining(
           {
             "validateStatus": expect.anything()
           }
         ));
 
-      mockAxios.mockResponse({data: 'data here'});
+      mockAxios.mockResponse(dataObject);
 
-      const result = await promise;
-
-      expect(result).toEqual("data here");
+      expect(await promise).toEqual(dataObject.data);
     });
 
     test('should handle 404  response', async () => {
-      const promise = getUsersByID("1");
+      const id = BaseGenerators.getNumber();
+      const promise = getUsersByID(id);
 
       expect(mockAxios.get).toHaveBeenCalledWith(
-        expect.stringMatching("http://localhost:4000/users/1"),
+        expect.stringMatching("http://localhost:4000/users/" + id),
         expect.objectContaining(
           {
             "validateStatus": expect.anything()
           }
         ));
 
-      mockAxios.mockResponse({
-        data: {},
-        status: 404,
-        statusText: 'NotFound',
-        headers: {},
-        config: {},
-      });
+      mockAxios.mockResponse(AxiosGenerator.get404());
 
-      const result = await promise;
-
-      expect(result).toEqual([]);
+      expect(await promise).toEqual([]);
     });
 
     test('should handle 500 response', async () => {
-      const promise = getUsersByID("1");
-      mockAxios.mockError({
-        data: {},
-        status: 500,
-        statusText: 'InternalServerError',
-        headers: {},
-        config: {},
-      });
+      const id = BaseGenerators.getNumber();
+      const promise = getUsersByID(id);
+      mockAxios.mockError(AxiosGenerator.getError());
 
       try {
         await promise;

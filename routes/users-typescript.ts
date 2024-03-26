@@ -17,11 +17,9 @@ router.get('/:id', function(req:Request, res: Response) {
   /**
    * TODO:
    * Improvements...
-   * Add example of jest tests
    * Add None type
-   * Add generators
    */
-  userService.getUsersByID(req.params.id).then((userData: User | undefined) => {
+  userService.getUsersByID(req.params.id as unknown as number).then((userData: User | undefined) => {
     res.render('user', { title: 'User data', data: userData });
   }).catch(e => {
     res.sendStatus(404);

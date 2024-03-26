@@ -4,6 +4,7 @@ module.exports = {
   testEnvironment: 'node',
   testMatch: ["**/test/**/*.test.ts"],
   coveragePathIgnorePatterns: [
+    "./test/generators/*",
     "./app.ts",
     "./connectors/user-connector.js",
     "./routes/users.js",
