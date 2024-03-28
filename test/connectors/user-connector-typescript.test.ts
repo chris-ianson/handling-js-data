@@ -1,17 +1,36 @@
 import mockAxios from 'jest-mock-axios';
-import {getUsers, getUsersByID} from "../../connectors/user-connector-typescript";
+import Connector from "../../connectors/user-connector-typescript";
 import AxiosGenerator from "../generators/AxiosGenerator";
 import BaseGenerators from "../generators/BaseGenerators";
+import fastCheck from "fast-check";
 
 describe('user-connector-typescript', function () {
 
+  let connectorInstance: any;
+
+  beforeEach(() => {
+    connectorInstance = new Connector()
+  })
   afterEach(() => {
     mockAxios.reset();
   });
 
-  describe('getUsers', () => {
+  describe('validateStatus', () => {
+    test('should handle (>=200 && < 300)', () => {
+      fastCheck.assert(
+        fastCheck.property(fastCheck.integer({max: 299, min: 200}), (x: number)  => {
+          expect(Connector.validateStatus.validateStatus(x)).toEqual(true)
+        })
+      )
+    });
+    test('should handle 404', () => {
+        expect(Connector.validateStatus.validateStatus(404)).toEqual(true);
+    });
+  });
+
+  describe('connectorInstance.getUsers', () => {
     test('should handle 200 response', async () => {
-      const promise = getUsers();
+      const promise = connectorInstance.getUsers();
       const dataObject = BaseGenerators.getDataObject();
 
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -28,7 +47,7 @@ describe('user-connector-typescript', function () {
     });
 
     test('should handle 404  response', async () => {
-      const promise = getUsers();
+      const promise = connectorInstance.getUsers();
 
       expect(mockAxios.get).toHaveBeenCalledWith(
         expect.stringMatching("http://localhost:4000/users"),
@@ -44,10 +63,10 @@ describe('user-connector-typescript', function () {
     });
 
     test('should handle 500 response', async () => {
-      const promise = getUsers();
+      const promise = connectorInstance.getUsers();
       mockAxios.mockError(AxiosGenerator.getError());
 
-      promise.catch((e) => {
+      promise.catch((e: any) => {
         expect(e).toEqual({"config": {}, "data": {}, "headers": {}, "isAxiosError": true, "status": 500, "statusText": "InternalServerError"});
       })
       // try {
@@ -59,10 +78,10 @@ describe('user-connector-typescript', function () {
     });
   })
 
-  describe('getUsersByID', () => {
+  describe('connectorInstance.getUsersByID', () => {
     test('should return result', async () => {
       const id = BaseGenerators.getNumber();
-      const promise = getUsersByID(id);
+      const promise = connectorInstance.getUsersByID(id);
       const dataObject = BaseGenerators.getDataObject();
 
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -80,7 +99,7 @@ describe('user-connector-typescript', function () {
 
     test('should handle 404  response', async () => {
       const id = BaseGenerators.getNumber();
-      const promise = getUsersByID(id);
+      const promise = connectorInstance.getUsersByID(id);
 
       expect(mockAxios.get).toHaveBeenCalledWith(
         expect.stringMatching("http://localhost:4000/users/" + id),
@@ -97,7 +116,7 @@ describe('user-connector-typescript', function () {
 
     test('should handle 500 response', async () => {
       const id = BaseGenerators.getNumber();
-      const promise = getUsersByID(id);
+      const promise = connectorInstance.getUsersByID(id);
       mockAxios.mockError(AxiosGenerator.getError());
 
       try {

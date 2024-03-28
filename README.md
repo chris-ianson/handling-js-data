@@ -51,3 +51,7 @@ The next step will continue the refactor of the connector to make it easier to w
 ```
 git checkout api-step4
 ```
+
+### Step 4
+
+Refactor of code and increasing test coverage to 100%

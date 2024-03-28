@@ -1,31 +1,26 @@
 import * as userService from "../../services/user-service-typescript";
-import {getUsers, getUsersByID} from "../../connectors/user-connector-typescript";
-import mockAxios from 'jest-mock-axios';
 import User from "../../models/User";
 import UserGenerator from "../generators/UserGenerator";
 import AxiosGenerator from "../generators/AxiosGenerator";
 import BaseGenerators from "../generators/BaseGenerators";
-
-jest.mock('../../connectors/user-connector-typescript');
-
-const mockGetUsers = getUsers as jest.MockedFunction<typeof getUsers>
-const mockGetUsersByID = getUsersByID as jest.MockedFunction<typeof getUsersByID>
+import Connector from "../../connectors/user-connector-typescript";
 
 describe('user-service-typescript', () => {
-
-  afterEach(() => {
-    mockAxios.reset();
-  });
 
   const data: { [key: string]: any }[] = [UserGenerator.getUser()];
 
   const axiosError = AxiosGenerator.getError();
 
+  beforeEach(() => {
+    jest.spyOn(Connector.prototype, 'getUsers').mockResolvedValue(data);
+    jest.spyOn(Connector.prototype, 'getUsersByID').mockResolvedValue(data);
+  })
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   describe('getUsers should', () => {
-
     test('return user data', async () => {
-      mockGetUsers.mockResolvedValue(data);
-
       const response = await userService.getUsers();
 
       expect(response).toBeInstanceOf(Array);
@@ -34,7 +29,7 @@ describe('user-service-typescript', () => {
     });
 
     test('handle [] response', async () => {
-      mockGetUsers.mockResolvedValue([]);
+      jest.spyOn(Connector.prototype, 'getUsers').mockResolvedValue([]);
 
       const response = await userService.getUsers();
 
@@ -42,7 +37,7 @@ describe('user-service-typescript', () => {
     });
 
     it('handle 500 response', async () => {
-      mockGetUsers.mockRejectedValue(axiosError);
+      jest.spyOn(Connector.prototype, 'getUsers').mockRejectedValue(axiosError);
 
       try {
         await userService.getUsers();
@@ -53,10 +48,8 @@ describe('user-service-typescript', () => {
   });
 
   describe('getUsersByID should', () => {
-
     it('return user data', async () => {
       const id = BaseGenerators.getNumber();
-      mockGetUsersByID.mockResolvedValue(data);
 
       const response: any = await userService.getUsersByID(id);
 
@@ -64,9 +57,9 @@ describe('user-service-typescript', () => {
       expect(response.firstName).toEqual(data[0].firstName);
     });
 
-    it('handle undefined response', async () => {
+    it('handle empty array', async () => {
       const id = BaseGenerators.getNumber()
-      mockGetUsersByID.mockResolvedValue([]);
+      jest.spyOn(Connector.prototype, 'getUsersByID').mockResolvedValue([]);
 
       const response = await userService.getUsersByID(id);
 
@@ -75,7 +68,7 @@ describe('user-service-typescript', () => {
 
     it('handle 500 response', async () => {
       const id = BaseGenerators.getNumber()
-      mockGetUsersByID.mockRejectedValue(axiosError);
+      jest.spyOn(Connector.prototype, 'getUsersByID').mockRejectedValue(axiosError);
 
       try {
         await userService.getUsersByID(id);

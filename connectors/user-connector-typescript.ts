@@ -1,31 +1,27 @@
 import axios, {AxiosError, AxiosResponse} from "axios";
 
-export async function getUsers(): Promise<any> {
-  const validateStatus = {
-    validateStatus: (status: any) => (status >= 200 && status < 300) || status === 404
+export default class Connector {
+
+  static validateStatus = {
+    validateStatus: (status: number) => (status >= 200 && status < 300) || status === 404
   }
 
-  return axios.get('http://localhost:4000/users', validateStatus).then((response: AxiosResponse) => {
-    if(response.status === 404) {
-      return [];
-    }
-    return response.data;
-  }).catch((e: AxiosError) => {
-    throw e;
-  });
-}
+  getResponse = (response: AxiosResponse): object[] => response.status === 404 ? [] : response.data;
 
-export async function getUsersByID(id: number): Promise<any> {
-  const validateStatus = {
-    validateStatus: (status: any) => (status >= 200 && status < 300) || status === 404
+  async getUsers(): Promise<object[]> {
+    return axios.get('http://localhost:4000/users', Connector.validateStatus).then(
+      this.getResponse
+    ).catch((e: AxiosError) => {
+      throw e;
+    });
   }
 
-  return axios.get('http://localhost:4000/users/' + id, validateStatus).then((response: AxiosResponse) => {
-    if(response.status === 404) {
-      return [];
-    }
-    return response.data;
-  }).catch((e: AxiosError) => {
-    throw e;
-  });
+  async getUsersByID(id: number): Promise<object[]> {
+    return axios.get('http://localhost:4000/users/' + id, Connector.validateStatus).then(
+      this.getResponse
+    ).catch((e: AxiosError) => {
+      throw e;
+    });
+  }
 }
+

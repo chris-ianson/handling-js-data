@@ -1,9 +1,9 @@
 import {expect} from "chai";
 import sinon from 'sinon';
-import * as userConnector from '../../connectors/user-connector-typescript';
 import * as userService from '../../services/user-service-typescript';
 import User from "../../models/User";
 import {AxiosError} from "axios";
+import Connector from "../../connectors/user-connector-typescript";
 
 describe('user-service-typescript', () => {
 
@@ -50,8 +50,8 @@ describe('user-service-typescript', () => {
     };
 
   beforeEach(() => {
-    mockGetUsers = sinon.stub(userConnector, 'getUsers').resolves(data);
-    mockGetUsersByID = sinon.stub(userConnector, 'getUsersByID').resolves(data);
+    mockGetUsers = sinon.stub(Connector.prototype, 'getUsers').resolves(data);
+    mockGetUsersByID = sinon.stub(Connector.prototype, 'getUsersByID').resolves(data);
   });
   afterEach(() => {
     mockGetUsers.restore();
@@ -69,7 +69,7 @@ describe('user-service-typescript', () => {
 
     it('handle 404 response', async () => {
       mockGetUsers.restore();
-      mockGetUsers = sinon.stub(userConnector, 'getUsers').rejects(axiosError404);
+      mockGetUsers = sinon.stub(Connector.prototype, 'getUsers').rejects(axiosError404);
 
       const response = await userService.getUsers();
 
@@ -80,7 +80,7 @@ describe('user-service-typescript', () => {
       // @ts-ignore
       const axiosErrorNoResponse: AxiosError = new AxiosError("ECONNREFUSED","500",{},{});
       mockGetUsers.restore();
-      mockGetUsers = sinon.stub(userConnector, 'getUsers').rejects(axiosErrorNoResponse);
+      mockGetUsers = sinon.stub(Connector.prototype, 'getUsers').rejects(axiosErrorNoResponse);
 
       return userService
         .getUsers()
@@ -92,7 +92,7 @@ describe('user-service-typescript', () => {
 
     it('handle 500 response', async () => {
       mockGetUsers.restore();
-      mockGetUsers = sinon.stub(userConnector, 'getUsers').rejects(axiosError);
+      mockGetUsers = sinon.stub(Connector.prototype, 'getUsers').rejects(axiosError);
 
       return userService
         .getUsers()
@@ -106,7 +106,7 @@ describe('user-service-typescript', () => {
   context('getUsersByID should', () => {
 
     it('return user data', async () => {
-      const response: any = await userService.getUsersByID('1');
+      const response: any = await userService.getUsersByID(1);
 
       expect(response).to.be.instanceOf(User);
       expect(response.firstName).to.eq('Jackie');
@@ -114,9 +114,9 @@ describe('user-service-typescript', () => {
 
     it('handle 404 response', async () => {
       mockGetUsersByID.restore();
-      mockGetUsersByID = sinon.stub(userConnector, 'getUsersByID').rejects(axiosError404);
+      mockGetUsersByID = sinon.stub(Connector.prototype, 'getUsersByID').rejects(axiosError404);
 
-      const response = await userService.getUsersByID('1');
+      const response = await userService.getUsersByID(1);
 
       expect(response).to.deep.eq(undefined);
     });
@@ -125,10 +125,10 @@ describe('user-service-typescript', () => {
       // @ts-ignore
       const axiosErrorNoResponse: AxiosError = new AxiosError("ECONNREFUSED","500",{},{});
       mockGetUsersByID.restore();
-      mockGetUsersByID = sinon.stub(userConnector, 'getUsersByID').rejects(axiosErrorNoResponse);
+      mockGetUsersByID = sinon.stub(Connector.prototype, 'getUsersByID').rejects(axiosErrorNoResponse);
 
       return userService
-        .getUsersByID('1')
+        .getUsersByID(1)
         .catch((result: any) => {
           expect(result).to.be.instanceOf(AxiosError);
           expect(result.code).to.eql("500");
@@ -137,10 +137,10 @@ describe('user-service-typescript', () => {
 
     it('handle 500 response', async () => {
       mockGetUsersByID.restore();
-      mockGetUsersByID = sinon.stub(userConnector, 'getUsersByID').rejects(axiosError);
+      mockGetUsersByID = sinon.stub(Connector.prototype, 'getUsersByID').rejects(axiosError);
 
       return userService
-        .getUsersByID('1')
+        .getUsersByID(1)
         .catch((result: any) => {
           expect(result).to.be.instanceOf(AxiosError);
           expect(result.code).to.eql("500");
