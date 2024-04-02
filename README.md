@@ -1,8 +1,11 @@
-# Productionise the code
+# Productionize the code
 
 The following steps will tidy up the code and get it ready for releasing into production.
 
-### Step 1
+### Step 1 - ESLint and Lefthook 
+
+![Lefthook](https://raw.githubusercontent.com/evilmartians/lefthook/HEAD/logo_sign.svg)
+
 Add ESLint to keep code consistent.
 ```
 npm install --save-dev eslint typescript typescript-eslint
@@ -26,6 +29,10 @@ export default tseslint.config(
   }
 );
 ```
+
+**Warning**
+IntelliJ can't pick up eslint.config.js so may not highlight lint issues within the IDE.
+
 ESLint can be run manually but ideally this should be run automatically using a hook.
 
 Add Lefthook for pre-commit checks
@@ -44,4 +51,10 @@ pre-commit:
      eslint:
        glob: "*.{js,ts,jsx,tsx}"
        run: npx eslint {staged_files}
+```
+###Step 2 - Lint commit messages
+
+Next step is adding commitlint to lint commit messages
+```
+git checkout production-step2
 ```
