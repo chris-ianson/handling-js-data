@@ -1,5 +1,5 @@
 import mockAxios from 'jest-mock-axios';
-import Connector from "../../connectors/user-connector-typescript";
+import Connector from "../../src/connectors/user-connector-typescript";
 import AxiosGenerator from "../generators/AxiosGenerator";
 import BaseGenerators from "../generators/BaseGenerators";
 import fastCheck from "fast-check";

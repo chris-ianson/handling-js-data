@@ -7,7 +7,7 @@ import User from "../models/User";
 
 router.get('/', function(req:Request, res: Response) {
     userService.getUsers().then((userData: User[]) => {
-      res.render('users', {title: 'The Sopranos', data: userData});
+      res.render('users', {title: 'The Sopranos', data: userData,});
     }).catch(e => {
       res.sendStatus(404);
     });

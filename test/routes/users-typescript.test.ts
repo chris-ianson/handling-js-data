@@ -1,11 +1,11 @@
-import {getUsers, getUsersByID} from '../../services/user-service-typescript';
-import User from "../../models/User";
+import {getUsers, getUsersByID} from '../../src/services/user-service-typescript';
+import User from "../../src/models/User";
 import app from "../../app";
 import UserGenerator from "../generators/UserGenerator";
 
 const request = require('supertest');
 
-jest.mock('../../services/user-service-typescript');
+jest.mock('../../src/services/user-service-typescript');
 
 const mockGetUsers = getUsers as jest.MockedFunction<typeof getUsers>
 const mockGetUsersByID = getUsersByID as jest.MockedFunction<typeof getUsersByID>

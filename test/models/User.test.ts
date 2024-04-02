@@ -1,4 +1,4 @@
-import User from "../../models/User";
+import User from "../../src/models/User";
 import UserGenerator from "../generators/UserGenerator";
 
 describe('User should', function () {

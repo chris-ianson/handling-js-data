@@ -1,7 +1,7 @@
 import sinon from 'sinon';
-import * as userService  from '../../services/user-service-typescript';
+import * as userService  from '../../src/services/user-service-typescript';
 import {afterEach} from "mocha";
-import User from "../../models/User";
+import User from "../../src/models/User";
 import app from "../../app";
 import {expect} from "chai";
 import {AxiosError} from "axios";

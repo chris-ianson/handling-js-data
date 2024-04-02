@@ -1,4 +1,4 @@
-import Connector from "../../connectors/user-connector-typescript";
+import Connector from "../../src/connectors/user-connector-typescript";
 import {expect} from "chai";
 import axios from "axios";
 import sinon from "sinon";

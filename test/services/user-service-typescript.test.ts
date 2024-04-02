@@ -1,9 +1,9 @@
-import * as userService from "../../services/user-service-typescript";
-import User from "../../models/User";
+import * as userService from "../../src/services/user-service-typescript";
+import User from "../../src/models/User";
 import UserGenerator from "../generators/UserGenerator";
 import AxiosGenerator from "../generators/AxiosGenerator";
 import BaseGenerators from "../generators/BaseGenerators";
-import Connector from "../../connectors/user-connector-typescript";
+import Connector from "../../src/connectors/user-connector-typescript";
 
 describe('user-service-typescript', () => {
 

@@ -1,9 +1,9 @@
 import {expect} from "chai";
 import sinon from 'sinon';
-import * as userService from '../../services/user-service-typescript';
-import User from "../../models/User";
+import * as userService from '../../src/services/user-service-typescript';
+import User from "../../src/models/User";
 import {AxiosError} from "axios";
-import Connector from "../../connectors/user-connector-typescript";
+import Connector from "../../src/connectors/user-connector-typescript";
 
 describe('user-service-typescript', () => {
 

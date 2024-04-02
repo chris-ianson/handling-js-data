@@ -1,25 +1,41 @@
-var createError = require('http-errors');
+// noinspection TypeScriptValidateTypes
+
+/**
+ * TODO
+ * - Linting
+ * - git messaging
+ * - helmut
+ * - logging
+ * - tagging
+ * - type checking
+ * - coverage check
+ * - env values
+ * - organise directories
+ * - build job
+ * - check libraries and fix critical errors
+ */
+const createError = require('http-errors');
 
 import express, { Application, Request, Response} from "express";
 
 // require('dotenv').config();
 
-// var express = require('express');
+// const express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./src/routes/index');
+const usersRouter = require('./src/routes/users');
 
-var usersTypescriptRouter = require('./routes/users-typescript');
+const usersTypescriptRouter = require('./src/routes/users-typescript');
 
 const app: Application = express();
 
 // const port = process.env.PORT;
-
+// const test = path.join?.('test');
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
