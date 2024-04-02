@@ -11,7 +11,8 @@ export default tseslint.config(
     "rules": {
       // Note: you must disable the base rule as it can report incorrect errors
       "comma-dangle": "off",
-      "@typescript-eslint/comma-dangle": "error"
+      "@typescript-eslint/comma-dangle": "error",
+      "@typescript-eslint/no-var-requires": "off"
     }
   }
 );

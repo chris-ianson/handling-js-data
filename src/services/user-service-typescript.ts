@@ -5,7 +5,7 @@ import Connector from "../connectors/user-connector-typescript";
 const connectorInstance = new Connector();
 
 export async function getUsers(): Promise<User[]> {
-  return connectorInstance.getUsers().then((response: any) =>
+  return connectorInstance.getUsers().then((response: object[]) =>
     !response.length  ? [] : User.deserialize(response)
   ).catch((e: AxiosError) => {
     throw e;
@@ -13,7 +13,7 @@ export async function getUsers(): Promise<User[]> {
 }
 
 export async function getUsersByID(id: number): Promise<User | undefined> {
-  return await connectorInstance.getUsersByID(id).then((response: any) =>
+  return await connectorInstance.getUsersByID(id).then((response: object[]) =>
     response.length ? User.deserialize(response)[0] : undefined
   ).catch((e: AxiosError) => {
     throw e;
