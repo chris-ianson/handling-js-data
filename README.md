@@ -76,3 +76,10 @@ Next up we'll refine run commands
 ```
 git checkout production-step3
 ```
+###Step 3 - Update TypeScript Config
+
+It's good to enforce quailty checks within TypeScript. We've also removed unused commands no longer needed and set the build config.
+
+```
+git checkout production-step4
+```
