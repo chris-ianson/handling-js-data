@@ -5,7 +5,7 @@ const router = Router();
 import * as userService from '../services/user-service-typescript';
 import User from "../models/User";
 
-router.get('/', function(req:Request, res: Response) {
+router.get('/', function(_: Request, res: Response) {
     userService.getUsers().then((userData: User[]) => {
       res.render('users', {title: 'The Sopranos', data: userData });
     }).catch(() => {
