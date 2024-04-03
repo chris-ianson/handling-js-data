@@ -19,9 +19,9 @@
        glob: "*.{js,ts,jsx,tsx}"
        run: npx eslint {staged_files}
  commit-msg:
-   scripts:
-     "commitlint.sh":
-       runner: bash
+   commands:
+     "lint commit message":
+       run: npx --no -- commitlint --edit "$1"
 #     rubocop:
 #       tags: backend style
 #       glob: "*.rb"

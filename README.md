@@ -58,3 +58,21 @@ Next step is adding commitlint to lint commit messages
 ```
 git checkout production-step2
 ```
+Install commitlint/config-conventional and commitlint/cli and add the config file.
+```
+npm install --save-dev @commitlint/config-conventional @commitlint/cli
+echo "export default {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
+```
+Once installed you can add the hook in lefthook.yml file
+```
+...
+commit-msg:
+   commands:
+     "lint commit message":
+       run: npx --no -- commitlint --edit "$1"
+...       
+```
+Next up we'll refine run commands
+```
+git checkout production-step3
+```
