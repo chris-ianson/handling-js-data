@@ -58,5 +58,3 @@ Next step is adding commitlint to lint commit messages
 ```
 git checkout production-step2
 ```
-
-
