@@ -2,14 +2,11 @@
 
 /**
  * TODO
- * - Linting
- * - git messaging
  * - helmut
+ * - env values
  * - logging
  * - tagging
- * - type checking
  * - coverage check
- * - env values
  * - organise directories
  * - build job
  * - check libraries and fix critical errors
@@ -31,7 +28,7 @@ const app: Application = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'src/views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
