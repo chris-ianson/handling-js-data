@@ -2,16 +2,15 @@
 
 /**
  * TODO
- * - helmut
  * - env values
  * - logging
  * - tagging
  * - coverage check
- * - organise directories
  * - build job
- * - check libraries and fix critical errors
  */
 import createError from 'http-errors';
+
+import helmet from "helmet";
 
 import express, {Application, NextFunction, Request, Response} from "express";
 
@@ -30,6 +29,7 @@ const app: Application = express();
 app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'pug');
 
+app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -78,13 +78,18 @@ git checkout production-step3
 ```
 ###Step 3 - Update TypeScript Config
 
-It's good to enforce quailty checks within TypeScript. We've also removed unused commands no longer needed and set the build config.
+It's good to enforce quality checks within TypeScript. We've also removed unused commands no longer needed and set the build config.
 
 ```
 git checkout production-step4
 ```
-###Step 4 - Remove vulnerabilities
+###Step 4 - Remove vulnerabilities and add Helmut
+- Jade templating has been replaced with Pug to remove critical vulnerabilities highlighted by npm audit.
+- Express and Nodemon have been updated to remove high vulnerabilities.
+- Added git hook to run `npm audit` and check there are zero vulnerabilities.
+- Added Helmet to update header information.
 
-Jade templating has been replaced with Pug to remove critical vulnerabilities highlighted by npm audit.
-
+```
+git checkout production-step5
+```
 
