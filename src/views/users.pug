@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  p Dead or Alive....
+  ul
+    each record in data
+      li='---------------------------------'
+      li='Firstname: ' + record.firstName
+      li='LastName: ' + record.lastName
+      li='Date of Birth: ' + record.dateOfBirthFormatted()
+      li='Age: ' + record.getAge()
+      li=record.haveTheyWhackedAnybody()
+      li=record.areTheyDead()
+      li='Family: ' + record.family
+      li='Location: ' + record.location
+      li='---------------------------------'
