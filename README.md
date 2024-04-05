@@ -83,3 +83,8 @@ It's good to enforce quailty checks within TypeScript. We've also removed unused
 ```
 git checkout production-step4
 ```
+###Step 4 - Remove vulnerabilities
+
+Jade templating has been replaced with Pug to remove critical vulnerabilities highlighted by npm audit.
+
+
