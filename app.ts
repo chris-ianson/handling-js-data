@@ -14,9 +14,8 @@ import helmet from "helmet";
 
 import express, {Application, NextFunction, Request, Response} from "express";
 
-// require('dotenv').config();
+require('dotenv').config();
 
-// const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');

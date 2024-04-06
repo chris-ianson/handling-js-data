@@ -92,4 +92,9 @@ git checkout production-step4
 ```
 git checkout production-step5
 ```
+#Step 5 - Set env properties
+Next step is to update connector values so they can be changed across environments. These are set with environment properties. In order to allow typechecking and capture environment errors at runtime we'll use the Zog library to validate env values against a schema.
+```
+npm install zog
+```
 
