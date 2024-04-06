@@ -2,10 +2,8 @@
 
 /**
  * TODO
- * - env values
  * - logging
  * - tagging
- * - coverage check
  * - build job
  */
 import createError from 'http-errors';

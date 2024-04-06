@@ -97,4 +97,8 @@ Next step is to update connector values so they can be changed across environmen
 ```
 npm install zog
 ```
+Next step is to install a logging library.
+```
+npm install production-step6
+```
 
