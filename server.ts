@@ -1,9 +1,10 @@
 import app from "./app";
+import logger from "./src/services/logger";
 
 require('dotenv').config();
 
-const port: any = process.env.PORT || '3000';
+const port: string = process.env.PORT || '3000';
 
 app.listen(port, () => {
-  console.log('listening on port ' + port)
+  logger.info(`listening on port ${port}`);
 });

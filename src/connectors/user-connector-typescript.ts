@@ -1,5 +1,6 @@
 import axios, {AxiosError, AxiosResponse} from "axios";
 import { environment } from "../config/environment.server";
+import logger from "../services/logger";
 
 export default class Connector {
 
@@ -16,6 +17,7 @@ export default class Connector {
     return axios.get(Connector.url(), Connector.validateStatus).then(
       this.getResponse
     ).catch((e: AxiosError) => {
+      logger.error('Error message', e);
       throw e;
     });
   }
@@ -24,6 +26,7 @@ export default class Connector {
     return axios.get(Connector.url() + '/' + id, Connector.validateStatus).then(
       this.getResponse
     ).catch((e: AxiosError) => {
+      logger.error('Error message', e);
       throw e;
     });
   }

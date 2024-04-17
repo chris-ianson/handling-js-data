@@ -102,3 +102,10 @@ Next step is to install a logging library.
 npm install production-step6
 ```
 
+#Step 6 - Add some Logging
+
+We've installed winston log library so and added some logging to the connector (note: we should consider where other logs may be useful and we'll come back to this in the future)
+
+The main logger setup is in logger.ts and you can see how we've configured it to produce multiple log files and different formats. Log rotation will be setup in the future when we deploy the app.
+
+

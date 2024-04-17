@@ -2,8 +2,6 @@
 
 /**
  * TODO
- * - logging
- * - tagging
  * - build job
  */
 import createError from 'http-errors';
@@ -16,7 +14,6 @@ require('dotenv').config();
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 
 import usersTypescriptRouter from './src/routes/users-typescript';
 
@@ -27,7 +24,6 @@ app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'pug');
 
 app.use(helmet());
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

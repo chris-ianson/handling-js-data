@@ -7,7 +7,7 @@ import Connector from "../../src/connectors/user-connector-typescript";
 
 describe('user-service-typescript', () => {
 
-  const data: { [key: string]: any }[] = [UserGenerator.getUser()];
+  const data: { [key: string]: unknown }[] = [UserGenerator.getUser()];
 
   const axiosError = AxiosGenerator.getError();
 
@@ -51,7 +51,7 @@ describe('user-service-typescript', () => {
     it('return user data', async () => {
       const id = BaseGenerators.getNumber();
 
-      const response: any = await userService.getUsersByID(id);
+      const response: User = await userService.getUsersByID(id) as User;
 
       expect(response).toBeInstanceOf(User);
       expect(response.firstName).toEqual(data[0].firstName);

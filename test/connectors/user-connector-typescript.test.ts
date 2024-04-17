@@ -6,7 +6,7 @@ import fastCheck from "fast-check";
 
 describe('user-connector-typescript', function () {
 
-  let connectorInstance: any;
+  let connectorInstance: Connector;
 
   beforeEach(() => {
     connectorInstance = new Connector()
@@ -66,9 +66,10 @@ describe('user-connector-typescript', function () {
       const promise = connectorInstance.getUsers();
       mockAxios.mockError(AxiosGenerator.getError());
 
-      promise.catch((e: any) => {
+      promise.catch((e: Error) => {
         expect(e).toEqual({"config": {}, "data": {}, "headers": {}, "isAxiosError": true, "status": 500, "statusText": "InternalServerError"});
-      })
+      });
+
       // try {
       //   await promise;
       // } catch (error) {
