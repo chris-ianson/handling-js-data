@@ -1,20 +1,14 @@
-// noinspection TypeScriptValidateTypes
-
-/**
- * TODO
- * - build job
- */
 import createError from 'http-errors';
-
 import helmet from "helmet";
-
 import express, {Application, NextFunction, Request, Response} from "express";
+import path from 'path';
+import cookieParser from 'cookie-parser';
 
 require('dotenv').config();
 
-const path = require('path');
-const cookieParser = require('cookie-parser');
-
+import { routeExampleToggledPages } from './src/routes';
+import { routeToggles } from "./src/routes/feature-toggles";
+import { routeToggledSection } from './src/routes/toggle-section';
 import usersTypescriptRouter from './src/routes/users-typescript';
 
 const app: Application = express();
@@ -29,27 +23,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use("/", routeToggles);
+
+app.use('/', routeExampleToggledPages);
+
 app.use('/users-typescript', usersTypescriptRouter);
+
+app.use('/toggle-section', routeToggledSection);
 
 // catch 404 and forward to error handler
 // @ts-expect-error multiple overload signatures that don't match
 app.use(function(req:Response, res:Request, next: NextFunction) {
   next(createError(404));
 });
-
-// error handler
-// app.use((err:any , req:Response , res: Response, next: any) => {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-//
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
-
-// app.listen(port, () => {
-//   console.log('listening on port ' + port)
-// });
 
 export default app;
