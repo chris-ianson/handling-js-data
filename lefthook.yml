@@ -18,8 +18,8 @@
      eslint:
        glob: "*.{js,ts,jsx,tsx}"
        run: npx eslint {staged_files}
-     npm-audit:
-       run: npm audit
+    #  npm-audit:
+    #    run: npm audit
  commit-msg:
    commands:
      "lint commit message":

@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npx tsc",
+    "copy-templates": "copyfiles -u 1 src/views/*.pug dist/src/",
+    "copy-css": "copyfiles -u 1 public/stylesheets/*.css dist/public",
+    "build": "npx tsc && npm run copy-templates && npm run copy-css",
     "start": "node dist/server.js",
     "dev": "DEBUG=handling-js-data:* nodemon server.ts",
     "test": "mocha -r ts-node/register test --config ./test/.mocharc.js --exit",
@@ -36,6 +38,7 @@
     "@types/sinon": "^17.0.3",
     "c8": "^9.1.0",
     "chai": "^4.3.7",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.57.0",
     "fast-check": "^3.16.0",
     "jest": "^29.7.0",
