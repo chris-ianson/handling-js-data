@@ -13,8 +13,9 @@ export async function getUsers(): Promise<User[]> {
 }
 
 export async function getUsersByID(id: number): Promise<User | undefined> {
-  return await connectorInstance.getUsersByID(id).then((response: object[]) =>
-    response.length ? User.deserialize(response)[0] : undefined
+  return await connectorInstance.getUsersByID(id).then((response: object[]) => {
+    return response.length ? User.deserialize(response)[0] : undefined
+  }
   ).catch((e: AxiosError) => {
     throw e;
   })

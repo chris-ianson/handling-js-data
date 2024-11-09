@@ -29,6 +29,9 @@ export default class User {
   @Expose()
   readonly location?: string;
 
+  @Expose()
+  readonly _id?: string;
+
   static deserialize(data: object[]): User[] {
     return plainToInstance(User, data, { excludeExtraneousValues: true });
   }
